@@ -60,6 +60,10 @@
 #define ZMQ_NEW_MONITOR_EVENT_LAYOUT
 #endif
 
+#if ZMQ_VERSION >= ZMQ_MAKE_VERSION(4, 1, 0)
+#define ZMQ_HAS_PROXY_STEERABLE
+#endif
+
 // In order to prevent unused variable warnings when building in non-debug
 // mode use this macro to make assertions.
 #ifndef NDEBUG
@@ -109,7 +113,16 @@ namespace zmq
         if (rc != 0)
             throw error_t ();
     }
-
+    
+#ifdef ZMQ_HAS_PROXY_STEERABLE
+    inline void proxy_steerable (void *frontend, void *backend, void *capture, void *control)
+    {
+        int rc = zmq_proxy_steerable (frontend, backend, capture, control);
+        if (rc != 0)
+            throw error_t ();
+    }
+#endif
+    
     inline void version (int *major_, int *minor_, int *patch_)
     {
         zmq_version (major_, minor_, patch_);
@@ -254,13 +267,16 @@ namespace zmq
         }
 
 
-        inline explicit context_t (int io_threads_)
+        inline explicit context_t (int io_threads_, int max_sockets_ = ZMQ_MAX_SOCKETS_DFLT)
         {
             ptr = zmq_ctx_new ();
             if (ptr == NULL)
                 throw error_t ();
 
             int rc = zmq_ctx_set (ptr, ZMQ_IO_THREADS, io_threads_);
+            ZMQ_ASSERT (rc == 0);
+
+            rc = zmq_ctx_set (ptr, ZMQ_MAX_SOCKETS, max_sockets_);
             ZMQ_ASSERT (rc == 0);
         }
 
