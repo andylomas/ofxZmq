@@ -9,7 +9,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\..\addons\ofxZmq\libs\zmq\lib\vs2012;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libzmq-v110-mt-3_2_4;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libzmq-v110-mt-3_2_4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />

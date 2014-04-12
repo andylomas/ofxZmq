@@ -14,6 +14,7 @@ public:
 	void setIdentity(string data);
 	string getIdentity();
 
+	bool getConnected();
 
 	void setHighWaterMark(long maxQueueSize);
 	void setSendHighWaterMark(long maxQueueSize);
