@@ -11,4 +11,5 @@
 #include "ofxZmqRequest.h"
 #include "ofxZmqReply.h"
 #include "ofxZmqPair.h"
-
+#include "ofxZmqPush.h"
+#include "ofxZmqPull.h"
